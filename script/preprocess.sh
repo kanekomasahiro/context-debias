@@ -1,4 +1,4 @@
-model_type=$1 # bert roberta albert dbert
+model_type=$1
 data=$2
 seed=42
 block_size=128

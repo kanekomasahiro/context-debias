@@ -32,7 +32,7 @@ pip install .
 ### To debias your contextualised embeddings
 ```
 cd script
-./preprocess.sh [bert/roberta/albert/dbert] /path/to/your/data
+./preprocess.sh [bert/roberta/albert/dbert/electra] /path/to/your/data
 ./debias.sh [bert/roberta/albert/dbert] gpu_id
 
 ```
