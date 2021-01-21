@@ -28,18 +28,15 @@ cd transformers
 pip install .
 ```
 
+
 ### To debias your contextualised embeddings
 ```
-cd src
-python train.py --embedding path/to/your/embeddings --dictionary ../data/dict_wn.json --config config/hyperparameter.json --save-prefix path/to/save/directory --gpu id --save-binary
+cd script
+./preprocess.sh [bert/roberta/albert/dbert] /path/to/your/data
+./debias.sh [bert/roberta/albert/dbert] gpu_id
 
 ```
 Output is a debiased binary word embeddings saved in `--save-prefix`
-
-
-### Our debiased contextualised embeddings
-
-You can directly download our debiased [BERT](), [RoBERTa](), [ALBERT](), [DistilBERT]() and [ELECTRA]().
 
 
 ### License
