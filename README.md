@@ -36,7 +36,6 @@ cd script
 ./debias.sh [bert/roberta/albert/dbert] gpu_id
 
 ```
-Output is a debiased binary word embeddings saved in `--save-prefix`
 
 
 ### License
