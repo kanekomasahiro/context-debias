@@ -15,7 +15,7 @@ Code and debiased word embeddings for the paper: "Debiasing Pre-trained Contextu
 ```
 
 
-### Our experiment settings
+### Requirements
 - python==3.7.3
 - torch==1.5.0
 - nltk==3.5
