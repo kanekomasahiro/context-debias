@@ -33,7 +33,7 @@ pip install .
 ```
 cd script
 ./preprocess.sh [bert/roberta/albert/dbert/electra] /path/to/your/data
-./debias.sh [bert/roberta/albert/dbert] gpu_id
+./debias.sh [bert/roberta/albert/dbert/electra] gpu_id
 
 ```
 
