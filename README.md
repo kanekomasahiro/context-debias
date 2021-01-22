@@ -37,6 +37,9 @@ cd script
 
 ```
 
+### Our debiased conttextualised embeddings
+
+You can directly download our debiased [conttextualised embeddings](https://drive.google.com/drive/folders/1a99jISCUfTp2E5BNQtIHEelQT-Pf8ayB?usp=sharing).
 
 ### License
 See the LICENSE file.
