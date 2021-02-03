@@ -1,7 +1,6 @@
 import argparse
 import regex as re
 import nltk
-import random
 
 import torch
 from torch.utils.data import Dataset
@@ -19,7 +18,6 @@ def parse_args():
     parser.add_argument('--output', type=str, required=True)
     parser.add_argument('--block_size', type=int, default=128)
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--random', action='store_true')
     parser.add_argument('--model_type', type=str, required=True,
                         choices=['bert', 'roberta', 'electra', 'albert', 'dbert'])
 
@@ -76,19 +74,6 @@ def encode_to_is(tokenizer, data, add_special_tokens):
 
     return data
 
-def shuffle_list(examples, labels=None):
-    idxs = list(range(len(examples)))
-    random.shuffle(idxs)
-    tmp_examples = []
-    tmp_labels = []
-
-    for idx in idxs:
-        tmp_examples.append(examples[idx])
-        if labels is not None:
-            tmp_labels.append(labels[idx])
-
-    return tmp_examples, tmp_labels
-
 def split_data(input, dev_rate, max_train_data_size):
     if max_train_data_size > 0:
         train = input[:max_train_data_size]
@@ -116,43 +101,6 @@ def main(args):
 
     model, tokenizer = prepare_transformer(args)
 
-    if args.random:
-        #attributes_num_l = []
-        #stereotypes_num = len(stereotypes)
-        #for attributes in attributes_l:
-            #attributes_num_l.append(len(attributes))
-        l = stereotypes + sorted(list(attributes_l[0])) + sorted(list(attributes_l[1]))
-        num = int(len(l) / 3)
-        random.shuffle(l)
-        #attributes_l = []
-
-        attributes_l = [[], []]
-        stereotypes = []
-        for w in l:
-            random_idx = int(random.random() * 3)
-            if random_idx == 0:
-                attributes_l[0].append(w)
-            elif random_idx == 1:
-                attributes_l[1].append(w)
-            elif random_idx == 2:
-                stereotypes.append(w)
-        stereotype_set = set(stereotypes)
-        attributes_l[0] = set(attributes_l[0])
-        attributes_l[1] = set(attributes_l[1])
-        #stereotypes = l[:num]
-        #stereotype_set = set(stereotypes)
-        #l = l[num:]
-        '''
-        stereotypes = l[:stereotypes_num]
-        l = l[stereotypes_num:]
-        for attributes_num in attributes_num_l:
-            attributes_l.append(set(l[:attributes_num]))
-            l = l[attributes_num:]
-        '''
-        #for _ in range(2):
-            #attributes_l.append(set(l[:num]))
-            #l = l[num:]
-
     if args.stereotypes:
         tok_stereotypes = encode_to_is(tokenizer, stereotypes, add_special_tokens=False)
 
@@ -161,9 +109,6 @@ def main(args):
         neutral_labels = []
     attributes_examples = [[] for _ in range(len(attributes_l))]
     attributes_labels = [[] for _ in range(len(attributes_l))]
-
-    neutral_fw = open(args.output + '/neutral.txt', 'w')
-    attributes_fw_l = [open(args.output  + f'/attribute{i}.txt', 'w') for i in range(len(attributes_l))]
 
     other_num = 0
 
@@ -187,13 +132,12 @@ def main(args):
                     a_set |= attribute
             attribute_other_l.append(a_set)
 
-        for i, (attribute_set, other_set, attributes_fw) in enumerate(zip(attributes_l, attribute_other_l, attributes_fw_l)):
+        for i, (attribute_set, other_set) in enumerate(zip(attributes_l, attribute_other_l)):
             if attribute_set & token_set:
                 neutral_flag = False
                 if not other_set & token_set:
                     orig_line = line
                     line = tokenizer.encode(line, add_special_tokens=True)
-                    attributes_fw.write(orig_line + '\n')
                     labels = attribute_set & token_set
                     for label in list(labels):
                         idx = tokens_lower.index(label)
@@ -218,7 +162,6 @@ def main(args):
                 if stereotype_set & token_set:
                     orig_line = line
                     line = tokenizer.encode(line, add_special_tokens=True)
-                    neutral_fw.write(orig_line + '\n')
                     labels = stereotype_set & token_set
                     for label in list(labels):
                         idx = tokens_lower.index(label)
@@ -256,5 +199,4 @@ def main(args):
 
 if __name__ == "__main__":
     args = parse_args()
-    random.seed(args.seed)
     main(args)
