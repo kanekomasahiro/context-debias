@@ -1,6 +1,5 @@
 model_type=$1
 gpu=$2
-data=$data
 debias_layer=all # first last all
 loss_target=token # token sentence
 dev_data_size=1000
@@ -21,7 +20,6 @@ elif [ $model_type = 'electra' ]; then
 fi
 
 TRAIN_DATA=../preprocess/$seed/$model_type/data.bin
-
 OUTPUT_DIR=../debiased_models/$seed/$model_type
 
 rm -r $OUTPUT_DIR
@@ -35,7 +33,7 @@ CUDA_VISIBLE_DEVICES=$gpu python ../src/run_debias_mlm.py \
     --do_train \
     --data_file=$TRAIN_DATA \
     --do_eval \
-    --learning_rate 5e-5 \
+    --learning_rate 2e-5 \
     --per_gpu_train_batch_size 32 \
     --per_gpu_eval_batch_size 32 \
     --num_train_epochs 3 \
@@ -46,5 +44,4 @@ CUDA_VISIBLE_DEVICES=$gpu python ../src/run_debias_mlm.py \
     --evaluate_during_training \
     --weighted_loss $alpha $beta \
     --dev_data_size $dev_data_size \
-    --line_by_line \
-    --square_loss
+    --line_by_line
