@@ -31,15 +31,17 @@ pip install .
 
 ### To debias your contextualised embeddings
 ```
+wget http://data.statmt.org/news-commentary/v15/training-monolingual/news-commentary-v15.en.gz -P data
+gunzip data/news-commentary-v15.en.gz
 cd script
-./preprocess.sh [bert/roberta/albert/dbert/electra] /path/to/your/data
+./preprocess.sh [bert/roberta/albert/dbert/electra] ../data/data/news-commentary-v15.en
 ./debias.sh [bert/roberta/albert/dbert/electra] gpu_id
 
 ```
 
 ### Our debiased conttextualised embeddings
 
-You can directly download our ``all-token`` debiased [conttextualised embeddings](https://drive.google.com/drive/folders/1a99jISCUfTp2E5BNQtIHEelQT-Pf8ayB?usp=sharing).
+You can directly download our ``all-token`` debiased [contextualised embeddings](https://drive.google.com/drive/folders/1a99jISCUfTp2E5BNQtIHEelQT-Pf8ayB?usp=sharing).
 
 ### License
 See the LICENSE file.
