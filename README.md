@@ -34,7 +34,7 @@ pip install .
 wget http://data.statmt.org/news-commentary/v15/training-monolingual/news-commentary-v15.en.gz -P data
 gunzip data/news-commentary-v15.en.gz
 cd script
-./preprocess.sh [bert/roberta/albert/dbert/electra] ../data/data/news-commentary-v15.en
+./preprocess.sh [bert/roberta/albert/dbert/electra] ../data/news-commentary-v15.en
 ./debias.sh [bert/roberta/albert/dbert/electra] gpu_id
 
 ```
