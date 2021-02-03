@@ -33,7 +33,7 @@ CUDA_VISIBLE_DEVICES=$gpu python ../src/run_debias_mlm.py \
     --do_train \
     --data_file=$TRAIN_DATA \
     --do_eval \
-    --learning_rate 2e-5 \
+    --learning_rate 5e-5 \
     --per_gpu_train_batch_size 32 \
     --per_gpu_eval_batch_size 32 \
     --num_train_epochs 3 \
