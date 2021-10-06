@@ -44,4 +44,5 @@ CUDA_VISIBLE_DEVICES=$gpu python ../src/run_debias_mlm.py \
     --evaluate_during_training \
     --weighted_loss $alpha $beta \
     --dev_data_size $dev_data_size \
+    --square_loss \
     --line_by_line
