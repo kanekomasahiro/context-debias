@@ -31,7 +31,6 @@ pip install .
 
 ### To debias your contextualised embeddings
 ```
-mkdir data
 curl -o data/news-commentary-v15.en.gz -OL https://data.statmt.org/news-commentary/v15/training-monolingual/news-commentary-v15.en.gz
 gunzip data/news-commentary-v15.en.gz
 cd script
